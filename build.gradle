@@ -1,0 +1,229 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+// JDK version source compatibility
+sourceCompatibility = 17
+targetCompatibility = JavaVersion.VERSION_17
+
+application {
+    mainClass = 'nwgc.MainClass'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://plugins.gradle.org/m2/'
+    }
+}
+
+def grpcVersion = '1.57.1' // CURRENT_GRPC_VERSION
+def protocVersion = '3.22.3'
+
+dependencies {
+    implementation group: 'com.github.samtools', name: 'htsjdk', version: '2.24.1'
+
+    implementation group: 'xyz.capybara', name: 'clamav-client', version: '2.0.2'
+
+    implementation 'com.auth0:java-jwt:3.18.2'
+
+    // Log4j
+    def log4jVersion = '2.17.1'
+    implementation group: "org.apache.logging.log4j", name: 'log4j-core', version: log4jVersion
+
+    compileOnly group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1'
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: '8.5.83'
+    implementation group: 'org.apache.tomcat', name: 'tomcat-jasper', version: '8.5.83'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.1'
+    testImplementation 'io.github.glytching:junit-extensions:2.4.0'
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.10.0'
+
+    implementation group: 'javax.activation', name: 'activation', version: '1.1.1'
+    implementation group: 'antlr', name: 'antlr', version: '2.7.7'
+    implementation group: 'com.mchange', name: 'c3p0', version: '0.9.5.2'
+    compileOnly group: 'javax.enterprise', name: 'cdi-api', version: '1.1-PFD'
+    implementation group: 'com.fasterxml', name: 'classmate', version: '1.3.0'
+    implementation group: 'com.twelvemonkeys.common', name: 'common-image', version: '3.6.2'
+    implementation group: 'com.twelvemonkeys.common', name: 'common-io', version: '3.6.2'
+    implementation group: 'com.twelvemonkeys.common', name: 'common-lang', version: '3.6.2'
+    implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.2'
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.4'
+    implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+    implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.6'
+    implementation group: 'commons-digester', name: 'commons-digester', version: '2.1'
+    implementation group: 'commons-discovery', name: 'commons-discovery', version: '0.2'
+    implementation group: 'org.apache.commons', name: 'commons-email', version: '1.4'
+    implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.2'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.5'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+    implementation group: 'commons-logging', name: 'commons-logging', version: '1.2'
+    implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+    implementation group: 'javax.el', name: 'javax.el-api', version: '2.2.1'
+    implementation group: 'org.apache.geronimo.specs', name: 'geronimo-jta_1.1_spec', version: '1.1.1'
+
+    def hibernateVersion = '5.2.18.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-c3p0', version: hibernateVersion
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: hibernateVersion
+    implementation group: 'org.hibernate.common', name: 'hibernate-commons-annotations', version: '5.1.2.Final'
+    implementation group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.2.Final'
+    implementation group: 'org.javassist', name: 'javassist', version: '3.28.0-GA'
+    implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-core', version: '3.6.2'
+    implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-metadata', version: '3.6.2'
+    implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-tiff', version: '3.6.2'
+    implementation group: 'com.sun.istack', name: 'istack-commons-runtime', version: '3.0.11'
+
+    // Jackson
+    def jacksonVersion = '2.13.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jacksonVersion
+
+    implementation group: 'com.voodoodyne.jackson.jsog', name: 'jackson-jsog', version: '1.1.2'
+
+    implementation group: 'org.jboss', name: 'jandex', version: '2.0.0.Final'
+    implementation group: 'org.jasypt', name: 'jasypt', version: '1.9.2'
+    implementation group: 'javax.inject', name: 'javax.inject', version: '1'
+    implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2' // No Version Found javax.mail.jar
+    implementation group: 'javax.xml', name: 'jaxrpc-api', version: '1.1'
+    implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0'
+    // implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '3.0.0'
+    implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.3'
+    implementation group: 'org.jboss.spec.javax.interceptor', name: 'jboss-interceptors-api_1.1_spec', version: '1.0.0.Beta1'
+    implementation group: 'org.jboss.logging', name: 'jboss-logging', version: '3.3.0.Final'
+    compileOnly group: 'org.jboss.logging', name: 'jboss-logging-annotations', version: '1.2.0.Beta1'
+    implementation group: 'org.jboss.spec.javax.transaction', name: 'jboss-transaction-api_1.2_spec', version: '1.0.0.Final'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation group: 'org.json', name: 'json', version: '20211205' // json.jar
+    implementation group: 'javax.annotation', name: 'jsr250-api', version: '1.0'
+    implementation group: 'com.mchange', name: 'mchange-commons-java', version: '0.2.16'
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.2'
+
+    // poi
+    def poiVersion = '3.14'
+    implementation group: 'org.apache.poi', name: 'poi', version: poiVersion
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: poiVersion
+    implementation group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: poiVersion
+
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.18'
+
+    implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.0'
+    implementation group: 'org.quartz-scheduler', name: 'quartz-jobs', version: '2.3.0'
+
+    implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    implementation group: 'javax.servlet.jsp', name: 'jsp-api', version: '2.2'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.7'
+
+    implementation group: 'org.apache.velocity', name: 'velocity', version: '1.7'
+    implementation group: 'velocity-tools', name: 'velocity-tools-view', version: '2.0-beta1'
+    compileOnly group: 'org.codehaus.mojo', name: 'animal-sniffer-annotations', version: '1.14'
+    implementation group: 'com.google.api', name: 'api-common', version: '1.8.1'
+    implementation group: 'org.checkerframework', name: 'checker-compat-qual', version: '2.5.2'
+    implementation group: 'com.google.errorprone', name: 'error_prone_annotations', version: '2.1.3'
+    implementation group: 'com.google.guava', name: 'failureaccess', version: '1.0.1'
+
+    implementation group: 'com.google.api', name: 'gax', version: '1.47.1'
+    implementation group: 'com.google.api', name: 'gax-httpjson', version: '0.64.1'
+
+    // gRPC
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}",
+            "io.grpc:grpc-servlet:${grpcVersion}",
+            "io.grpc:grpc-stub:${grpcVersion}",
+            "io.grpc:grpc-okhttp:${grpcVersion}"
+
+    implementation group: 'io.grpc', name: 'grpc-netty', version: grpcVersion
+
+    implementation group: 'com.google.api.grpc', name: 'proto-google-common-protos', version: '1.16.0'
+    implementation group: 'com.google.api.grpc', name: 'proto-google-iam-v1', version: '0.12.0'
+    implementation group: 'io.grpc', name: 'grpc-context', version: '1.19.0'
+
+    compileOnly "org.apache.tomcat:annotations-api:6.0.53"
+
+    // Google API Client
+    def googleApiVersion = '1.30.2'
+    implementation group: 'com.google.api-client', name: 'google-api-client', version: googleApiVersion
+    implementation group: 'com.google.api-client', name: 'google-api-client-android', version: googleApiVersion
+    implementation group: 'com.google.api-client', name: 'google-api-client-appengine', version: googleApiVersion
+    implementation group: 'com.google.api-client', name: 'google-api-client-gson', version: googleApiVersion
+    implementation group: 'com.google.api-client', name: 'google-api-client-jackson2', version: googleApiVersion
+    implementation group: 'com.google.api-client', name: 'google-api-client-java6', version: googleApiVersion
+    implementation group: 'com.google.api-client', name: 'google-api-client-protobuf', version: googleApiVersion
+    implementation group: 'com.google.api-client', name: 'google-api-client-servlet', version: googleApiVersion
+    implementation group: 'com.google.api-client', name: 'google-api-client-xml', version: googleApiVersion
+
+    // Google API
+    implementation group: 'com.google.apis', name: 'google-api-services-iam', version: 'v1-rev286-1.25.0'
+    implementation group: 'com.google.apis', name: 'google-api-services-storage', version: 'v1-rev20190624-1.30.1'
+
+    // Google API
+    def googleAuthVersion = '0.16.2'
+    implementation group: 'com.google.auth', name: 'google-auth-library-appengine', version: googleAuthVersion
+    implementation group: 'com.google.auth', name: 'google-auth-library-credentials', version: googleAuthVersion
+    implementation group: 'com.google.auth', name: 'google-auth-library-oauth2-http', version: googleAuthVersion
+
+    // Google API
+    def googleCouldVersion = '1.84.0'
+    implementation group: 'com.google.cloud', name: 'google-cloud-core', version: googleCouldVersion
+    implementation group: 'com.google.cloud', name: 'google-cloud-core-http', version: googleCouldVersion
+    implementation group: 'com.google.cloud', name: 'google-cloud-storage', version: googleCouldVersion
+
+    // Google API
+    def googleHttpClientVersion = '1.31.0'
+    implementation group: 'com.google.http-client', name: 'google-http-client', version: googleHttpClientVersion
+    implementation group: 'com.google.http-client', name: 'google-http-client-android', version: googleHttpClientVersion
+    implementation group: 'com.google.http-client', name: 'google-http-client-apache-v2', version: googleHttpClientVersion
+    implementation group: 'com.google.http-client', name: 'google-http-client-appengine', version: googleHttpClientVersion
+    implementation group: 'com.google.http-client', name: 'google-http-client-gson', version: googleHttpClientVersion
+    implementation group: 'com.google.http-client', name: 'google-http-client-jackson2', version: googleHttpClientVersion
+    implementation group: 'com.google.http-client', name: 'google-http-client-protobuf', version: googleHttpClientVersion
+    implementation group: 'com.google.http-client', name: 'google-http-client-xml', version: googleHttpClientVersion
+
+    // Google API
+    def googleOAuthClientVersion = '1.30.1'
+    implementation group: 'com.google.oauth-client', name: 'google-oauth-client', version: googleOAuthClientVersion
+    implementation group: 'com.google.oauth-client', name: 'google-oauth-client-appengine', version: googleOAuthClientVersion
+    implementation group: 'com.google.oauth-client', name: 'google-oauth-client-java6', version: googleOAuthClientVersion
+    implementation group: 'com.google.oauth-client', name: 'google-oauth-client-servlet', version: googleOAuthClientVersion
+
+    implementation group: 'com.google.cloud.sql', name: 'postgres-socket-factory', version: '1.4.3'
+
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+    implementation group: 'com.google.guava', name: 'guava', version: '26.0-android'
+    implementation group: 'com.google.guava', name: 'listenablefuture', version: '9999.0-empty-to-avoid-conflict-with-guava'
+    implementation group: 'com.google.j2objc', name: 'j2objc-annotations', version: '1.1'
+
+    implementation group: 'com.rabbitmq', name: 'amqp-client', version: '5.16.0'
+    implementation group: 'io.opencensus', name: 'opencensus-api', version: '0.21.0'
+    implementation group: 'io.opencensus', name: 'opencensus-contrib-http-util', version: '0.21.0'
+    implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
+    implementation group: 'javax.jdo', name: 'jdo2-api', version: '2.3-eb'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.9'
+    implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.11'
+
+
+    implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '2.6.1'
+    runtimeOnly group: 'com.google.protobuf', name: 'protobuf-java-util', version: '3.7.1'
+    implementation group: 'org.threeten', name: 'threetenbp', version: '1.4.0'
+    implementation group: 'javax.transaction', name: 'transaction-api', version: '1.1'
+    implementation group: 'xpp3', name: 'xpp3', version: '1.1.4c'
+
+    implementation group: 'axis', name: 'axis-ant', version: '1.4'
+    implementation group: 'org.apache.axis', name: 'axis', version: '1.4'
+
+    implementation group: 'org.apache.pdfbox', name: 'pdfbox-app', version: '2.0.2'
+    implementation group: 'wsdl4j', name: 'wsdl4j', version: '1.5.1'
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+    implementation 'org.reflections:reflections:0.10.2'
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+}
